@@ -37,7 +37,7 @@ jobs:
               course_name=$(basename "$course_dir")
               typ_file="$course_dir/$course_name.typ"
               if [ -f "$typ_file" ]; then
-                typst compile "$typ_file" "build/${course_name}.pdf"
+                typst compile --root ../ "$typ_file" "build/${course_name}.pdf"
               fi
             fi
           done
