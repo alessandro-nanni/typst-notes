@@ -1,5 +1,5 @@
 // AUTOMATICALLY GENERATED FILE, DO NOT EDIT!
-#import "/global.typ": *
+#import "../global.typ": *
 
 #let primary-color = rgb("#00aa88")
 #let secondary-color = rgb("#ffaa00")

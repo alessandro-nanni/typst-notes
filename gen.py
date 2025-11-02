@@ -23,7 +23,7 @@ for raw_name, course_data in courses.items():
 
     # Content of the .typ file
     typ_content = f"""// AUTOMATICALLY GENERATED FILE, DO NOT EDIT!
-#import "/global.typ": *
+#import "../global.typ": *
 
 #let primary-color = rgb("{primary_color}")
 #let secondary-color = rgb("{secondary_color}")
