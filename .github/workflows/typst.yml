@@ -1,0 +1,108 @@
+name: Typst Build & Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Typst PDFs
+    container: ghcr.io/typst/typst
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y python3 python3-pip
+          pip install pyyaml
+
+      - name: Generate Typst course files
+        run: |
+          python3 <<'PYCODE'
+          import os, yaml
+
+          # Load course info from YAML
+          with open("courses.yml", "r", encoding="utf-8") as f:
+              courses = yaml.safe_load(f)
+
+          for raw_name, course_data in courses.items():
+              folder = os.path.join("courses", raw_name)
+              if not os.path.isdir(folder):
+                  continue
+
+              full_name = course_data.get("name", raw_name)
+              output_file = os.path.join(folder, f"{raw_name}.typ")
+
+              # Find all typ files in folder except the one named after the folder itself
+              includes = []
+              for file in sorted(os.listdir(folder)):
+                  if file.endswith(".typ") and file != f"{raw_name}.typ":
+                      includes.append(f'#include "{file}"')
+
+              # Build content
+              content = (
+                  '#import "/global.typ": *\n'
+                  f'#show: course-template.with(["{full_name}"])\n\n'
+                  + "\n".join(includes) + "\n"
+              )
+
+              # Write the generated file
+              with open(output_file, "w", encoding="utf-8") as f:
+                  f.write(content)
+              print(f"Generated {output_file}")
+          PYCODE
+
+      - name: Compile Typst to PDFs
+        run: |
+          mkdir -p build
+          for course_dir in courses/*; do
+            if [ -d "$course_dir" ]; then
+              course_name=$(basename "$course_dir")
+              typ_file="$course_dir/$course_name.typ"
+              if [ -f "$typ_file" ]; then
+                typst compile "$typ_file" "build/${course_name}.pdf"
+              fi
+            fi
+          done
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@main
+        with:
+          name: pdfs
+          path: build
+
+  deploy:
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Download artifacts
+        uses: actions/download-artifact@main
+        with:
+          name: pdfs
+          path: site
+      - name: Setup Pages
+        uses: actions/configure-pages@main
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@main
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@main
