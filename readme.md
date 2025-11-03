@@ -1,4 +1,9 @@
+# Prerequisites
+- Have python installed (with `pyyaml`)
+- Have a github account
+- have typst installed
 # How to use
+## 0. After creating the repository that uses this template, set GitHub pages source to GitHub actions
 ## 1. Create a `courses.yml` folder or change the existing one
 In the file, define a course with a "raw" name, and specify:
 - the name;
@@ -24,5 +29,5 @@ You will be able to view the pdf of each one, but they wont be uploaded to GitHu
 After committing and pushing, the github action will generate for each course a master doc, combining all the ones in the course's folder.
 For each course, you wil be able to view and download the master pdf at `https://<github username>.github.io/<repository name>/<raw course name>.pdf`.
 # Credits
-https://github.com/cartabinaria/typst-thesis: original typst building github action.  
+https://github.com/cartabinaria/typst-thesis: original typst building github action.
 https://github.com/thenuclearnexus: help with updating the github action.

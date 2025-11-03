@@ -2,8 +2,14 @@
 
 #let course-template(title, doc) = {
     set page(numbering: "1")
+    show outline.entry.where(level: 1): it => {
+        show repeat: none
+        v(0.4cm)
+        strong(it)
+    }
+
+    // content
     align(center, text(size: 20pt, title))
-    
     outline()
     doc
 }
