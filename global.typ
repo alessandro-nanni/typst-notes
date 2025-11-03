@@ -19,6 +19,9 @@
     // table first raw
     show table.cell.where(y: 0): strong
 
+    // text and paragraph
+    set par(justify: true)
+    set text(overhang: false,ligatures: false)
 
     let outline = secondary-color.desaturate(50%)
 
