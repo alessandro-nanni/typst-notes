@@ -1,9 +1,6 @@
 #import "_cs102.typ": *
 #show: template
 
-= A
-#important[bohboh]
 = B
-`lolololol`
+#raw(lorem(25))
 
-#table()[boobks][am,omg]
