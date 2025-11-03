@@ -5,3 +5,9 @@
 #important[#lorem(25)]
 
 #lorem(200)
+== Subheading
+== Another
+== More
+
+= Yet another
+== Sub
