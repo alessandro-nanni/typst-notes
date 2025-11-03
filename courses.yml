@@ -1,8 +1,3 @@
-math101:
-  name: "Mathematics 101"
-  primary_color: "#ff5733"
-  secondary_color: "#33c1ff"
-
 cs102:
   name: "Computer Science 102"
   primary_color: "#00aa88"
