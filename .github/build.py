@@ -21,7 +21,6 @@ for raw_name, course_data in courses.items():
   # Build content
   content = (
       '#import "../global.typ": *\n'
-      '#set page(numbering:"1")\n'
       f'#show: course-template.with([{full_name}])\n\n'
       + "\n".join(includes) + "\n"
   )
