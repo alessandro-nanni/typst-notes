@@ -8,7 +8,7 @@
 
 #let _template(primary-color, secondary-color, doc) = {
     // page
-    set page(numbering: "1")
+    
     set heading(numbering: "1.1")
     // footnote
     set footnote.entry(separator: line(length: 50%, stroke: gradient.linear(

@@ -4,4 +4,4 @@
 = A
 #important[#lorem(25)]
 
-#lorem(500)
+#lorem(200)
