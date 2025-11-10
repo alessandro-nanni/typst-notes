@@ -28,6 +28,8 @@
 
     let outline = secondary-color.desaturate(50%)
 
+    set highlight(fill:primary-color.transparentize(50%).darken(-20%))
+
     show raw.where(block: false): it => box(
         stroke: 0.5pt + outline,
         radius: 2pt,
@@ -47,3 +49,24 @@
     fill: col.transparentize(70%),
     content,
 )
+
+#let _annotate(bracket: ${$, fill: black, note, body) = layout(size => context {
+    box[
+        #place(
+            horizon + left,
+            dx: -55pt,
+            box(width: 45pt, text(hyphenate: true, fill: fill, note)),
+        )
+        #place(
+            horizon + left,
+            dx: -10pt,
+            text(
+                fill: fill,
+                $stretch(size: #{ measure(body, width: size.width).height + 0.5em }, #bracket)$,
+            ),
+        )
+        #body
+    ]
+})
+
+#let h(content) = highlight(content)
