@@ -12,7 +12,9 @@
 = Yet another
 == Sub
 #a[side note][#lorem(50)]
+#lorem(25+25)
 
-#raw("john lennon is innocent")
+#raw("raw text")
 
-this is #h[Very] important
+this is #h[very] important
+#footnote[Something else]

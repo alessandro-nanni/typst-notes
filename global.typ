@@ -43,7 +43,6 @@
 
 #let _important(col, content) = block(
     width: 100%,
-    radius: (right: 3pt),
     stroke: (left: 1.5pt + col),
     inset: 5pt,
     fill: col.transparentize(70%),
@@ -70,3 +69,7 @@
 })
 
 #let h(content) = highlight(content)
+
+#let merge(separator: sym.arrow, ..content) = {
+  content.pos().join(separator)
+}
