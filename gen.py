@@ -22,20 +22,16 @@ for raw_name, course_data in courses.items():
     typ_file_path = os.path.join(raw_name, f"_{raw_name}.typ")
 
     # Content of the .typ file
-    typ_content = f"""// AUTOMATICALLY GENERATED FILE, DO NOT EDIT!
-#import "../global.typ": *
-
-#let primary-color = rgb("{primary_color}")
-#let secondary-color = rgb("{secondary_color}")
-
-#let template(doc) = _template(primary-color, secondary-color, doc)
-
-#let important(content) = _important(primary-color, content)
-#let i(content) = important(content)
-
-#let annotate(note,body) = _annotate(fill:primary-color, note,body)
-#let a(note,body) = annotate(note,body)
-"""
+    typ_content = f'''// AUTOMATICALLY GENERATED FILE, DO NOT EDIT!
+#import "../global.typ"
+#import global: *
+#let template(doc) = {{
+primary-color.update(rgb("{primary_color}"))
+secondary-color.update(rgb("{secondary_color}"))
+show: global.template
+doc
+}}
+'''
 
     # Write to the .typ file
     with open(typ_file_path, "w", encoding="utf-8") as typ_file:

@@ -9,14 +9,15 @@
     doc
 }
 
-#let _template(primary-color, secondary-color, doc) = {
-    // page
+#let primary-color = state("primary-color", blue)
+#let secondary-color = state("secondary-color", green)
 
+#let template(doc) = context {
     set heading(numbering: "1.1")
     // footnote
     set footnote.entry(separator: line(length: 50%, stroke: gradient.linear(
-        primary-color,
-        rgb("#ffffff00"),
+        secondary-color.get(),
+        text.fill.lighten(20%),
         angle: 0deg,
     )))
     // table first raw
@@ -26,9 +27,9 @@
     set par(justify: true)
     set text(overhang: false, ligatures: false)
 
-    let outline = secondary-color.desaturate(50%)
+    let outline = secondary-color.get().desaturate(50%)
 
-    set highlight(fill:primary-color.transparentize(50%).darken(-20%))
+    set highlight(fill: primary-color.get().transparentize(50%).lighten(20%))
 
     show raw.where(block: false): it => box(
         stroke: 0.5pt + outline,
@@ -41,26 +42,28 @@
     doc
 }
 
-#let _important(col, content) = block(
-    width: 100%,
-    stroke: (left: 1.5pt + col),
-    inset: 5pt,
-    fill: col.transparentize(70%),
-    content,
-)
+#let _important(content) = context {
+    block(
+        stroke: (left: 1.5pt + primary-color.get()),
+        width: 100%,
+        inset: 5pt,
+        fill: primary-color.get().transparentize(70%),
+        content,
+    )
+}
 
-#let _annotate(bracket: ${$, fill: black, note, body) = layout(size => context {
+#let _annotate(bracket, note, body) = layout(size => context {
     box[
         #place(
             horizon + left,
             dx: -55pt,
-            box(width: 45pt, text(hyphenate: true, fill: fill, note)),
+            box(width: 45pt, text(hyphenate: true, fill: primary-color.get(), note)),
         )
         #place(
             horizon + left,
             dx: -10pt,
             text(
-                fill: fill,
+                fill: primary-color.get(),
                 $stretch(size: #{ measure(body, width: size.width).height + 0.5em }, #bracket)$,
             ),
         )
@@ -71,5 +74,10 @@
 #let h(content) = highlight(content)
 
 #let merge(separator: sym.arrow, ..content) = {
-  content.pos().join(separator)
+    content.pos().join(separator)
 }
+
+
+#let i(content) = _important(content)
+
+#let a(bracket: ${$, note, body) = _annotate(bracket, note, body)

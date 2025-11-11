@@ -1,8 +1,7 @@
 #import "_cs102.typ": *
 #show: template
-
 = A
-#important[#lorem(25)]
+#i[#lorem(25)]
 
 #lorem(20)
 == Subheading
@@ -11,8 +10,8 @@
 
 = Yet another
 == Sub
-#a[side note][#lorem(50)]
-#lorem(25+25)
+#a[side note][#lorem(20)]
+#lorem(40)
 
 #raw("raw text")
 
