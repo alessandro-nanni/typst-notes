@@ -14,12 +14,14 @@
 
 #let template(doc) = context {
     set heading(numbering: "1.1")
+
     // footnote
     set footnote.entry(separator: line(length: 50%, stroke: gradient.linear(
         secondary-color.get(),
         text.fill.lighten(20%),
         angle: 0deg,
     )))
+    
     // table first raw
     show table.cell.where(y: 0): strong
 

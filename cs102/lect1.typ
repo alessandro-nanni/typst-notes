@@ -11,7 +11,7 @@
 = Yet another
 == Sub
 #a[side note][#lorem(20)]
-#lorem(40)
+#lorem(400)
 
 #raw("raw text")
 
