@@ -17,3 +17,8 @@
 
 this is #h[very] important
 #footnote[Something else]
+
+#merge[Something][something else][another thing]
+
+#note(supplement:"def")[important or smth][#lorem(250)]
+#note[Something else][#lorem(100)]

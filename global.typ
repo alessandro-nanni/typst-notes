@@ -1,5 +1,7 @@
 #import "@preview/big-todo:0.2.0": *
 
+#let lighten = 85%
+
 #let course-template(title, doc) = {
     set page(numbering: "1")
 
@@ -13,15 +15,9 @@
 #let secondary-color = state("secondary-color", green)
 
 #let template(doc) = context {
+    // heading
     set heading(numbering: "1.1")
 
-    // footnote
-    set footnote.entry(separator: line(length: 50%, stroke: gradient.linear(
-        secondary-color.get(),
-        text.fill.lighten(20%),
-        angle: 0deg,
-    )))
-    
     // table first raw
     show table.cell.where(y: 0): strong
 
@@ -44,17 +40,18 @@
     doc
 }
 
-#let _important(content) = context {
+#let important(content) = context {
+    let color = primary-color.get()
     block(
-        stroke: (left: 1.5pt + primary-color.get()),
+        stroke: (left: 1.5pt + color),
         width: 100%,
         inset: 5pt,
-        fill: primary-color.get().transparentize(70%),
+        fill: color.lighten(lighten),
         content,
     )
 }
 
-#let _annotate(bracket, note, body) = layout(size => context {
+#let annotate(bracket, note, body) = layout(size => context {
     box[
         #place(
             horizon + left,
@@ -73,13 +70,31 @@
     ]
 })
 
-#let h(content) = highlight(content)
 
 #let merge(separator: sym.arrow, ..content) = {
     content.pos().join(separator)
 }
 
+#let note(supplement: none, title, body) = context {
+    let color = primary-color.get()
+    let header = []
+    if (supplement != none) {
+        header = smallcaps(lower(supplement)) + [: ]
+    }
+    header += title
+    block(stroke: 1.5pt + color, fill: color.lighten(lighten), inset: 5pt, {
+        strong(header)
+        v(1pt)
+        body
+    })
+}
 
-#let i(content) = _important(content)
+// shortcuts
+#let h(content) = highlight(content)
+#let u(content) = underline(content)
+#let i(content) = important(content)
+#let n(supplement: none, title, body) = note(supplement, title, body)
 
-#let a(bracket: ${$, note, body) = _annotate(bracket, note, body)
+#let a(bracket: ${$, note, body) = annotate(bracket, note, body)
+
+
