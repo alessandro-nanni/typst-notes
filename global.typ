@@ -29,7 +29,12 @@
 
     set highlight(fill: primary-color.get().transparentize(50%).lighten(20%))
 
-    show raw.where(block: false): it => box(
+    show raw.where(block: false): highlight.with(
+        fill: secondary-color.get().lighten(lighten),
+        radius: 2pt,
+        top-edge: 1em,
+    )
+    show raw.where(block: true): it => box(
         stroke: 0.5pt + outline,
         radius: 2pt,
         inset: 2pt,
@@ -82,7 +87,7 @@
         header = smallcaps(lower(supplement)) + [: ]
     }
     header += title
-    block(stroke: 1.5pt + color, fill: color.lighten(lighten), inset: 5pt, {
+    block(stroke: 1pt + color, fill: color.lighten(lighten), inset: 5pt, radius: 2pt, {
         strong(header)
         v(1pt)
         body
