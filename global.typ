@@ -1,9 +1,13 @@
-#import "@preview/big-todo:0.2.0": *
-
 #let lighten = 85%
 
 #let course-template(title, doc) = {
     set page(numbering: "1")
+    show outline: set heading(outlined: true)
+    show outline.entry.where(level: 1): it => {
+        show repeat: none
+        v(0.4cm)
+        strong(it)
+    }
 
     // content
     align(center, text(size: 20pt, title))
@@ -42,37 +46,40 @@
         it,
     )
 
+    set footnote.entry(
+        separator: line(length: 100%, stroke: 0.5pt),
+    )
+
     doc
 }
 
 #let important(content) = context {
     let color = primary-color.get()
-    block(
+    show: block.with(
         stroke: (left: 1.5pt + color),
         width: 100%,
         inset: 5pt,
         fill: color.lighten(lighten),
-        content,
     )
+    content
 }
 
 #let annotate(bracket, note, body) = layout(size => context {
-    box[
-        #place(
-            horizon + left,
-            dx: -55pt,
-            box(width: 45pt, text(hyphenate: true, fill: primary-color.get(), note)),
-        )
-        #place(
-            horizon + left,
-            dx: -10pt,
-            text(
-                fill: primary-color.get(),
-                $stretch(size: #{ measure(body, width: size.width).height + 0.5em }, #bracket)$,
-            ),
-        )
-        #body
-    ]
+    show: box.with()
+    place(
+        horizon + left,
+        dx: -55pt,
+        box(width: 45pt, text(hyphenate: true, fill: primary-color.get(), note)),
+    )
+    place(
+        horizon + left,
+        dx: -10pt,
+        text(
+            fill: primary-color.get(),
+            $stretch(size: #{ measure(body, width: size.width).height + 0.5em }, #bracket)$,
+        ),
+    )
+    body
 })
 
 
@@ -87,11 +94,10 @@
         header = smallcaps(lower(supplement)) + [: ]
     }
     header += title
-    block(stroke: 1pt + color, fill: color.lighten(lighten), inset: 5pt, radius: 2pt, {
-        strong(header)
-        v(1pt)
-        body
-    })
+    show: block.with(stroke: 1pt + color, fill: color.lighten(lighten), inset: 5pt, radius: 2pt)
+    strong(header)
+    v(1pt)
+    body
 }
 
 // shortcuts
