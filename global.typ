@@ -2,12 +2,18 @@
 
 #let course-template(title, doc) = {
     set page(numbering: "1")
-    show outline: set heading(outlined: true)
+
+    // outline
     show outline.entry.where(level: 1): it => {
         show repeat: none
         v(0.4cm)
         strong(it)
     }
+    show outline: it => {
+        it
+        pagebreak(weak: true)
+    }
+    set outline(title: none)
 
     // content
     align(center, text(size: 20pt, title))
@@ -44,10 +50,6 @@
         inset: 2pt,
         fill: outline.transparentize(70%),
         it,
-    )
-
-    set footnote.entry(
-        separator: line(length: 100%, stroke: 0.5pt),
     )
 
     doc

@@ -19,11 +19,11 @@ for raw_name, course_data in courses.items():
           includes.append(f'#include "{file}"')
 
   # Build content
-  content = (
-      '#import "../global.typ": *\n'
-      f'#show: course-template.with([{full_name}])\n\n'
-      + "\n".join(includes) + "\n"
-  )
+  content = f'''
+  #import "../global.typ": *
+  #show: course-template.with([{full_name}])
+  {'\n'.join(includes)}
+  '''
 
   # Write the generated file
   with open(output_file, "w", encoding="utf-8") as f:

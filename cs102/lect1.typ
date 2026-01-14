@@ -1,6 +1,6 @@
 #import "_cs102.typ": *
 #show: template
-= A
+= Something very long a long and complex title
 #i[#lorem(25)]
 
 #lorem(20)
