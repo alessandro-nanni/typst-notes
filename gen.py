@@ -15,15 +15,16 @@ for raw_name, course_data in courses.items():
     primary_color = course_data.get("primary_color", "#000000")
     secondary_color = course_data.get("secondary_color", "#FFFFFF")
 
-    # Create a folder for the course
-    os.makedirs(raw_name, exist_ok=True)
+    # Create a folder for the course and a notes subfolder
+    notes_dir = os.path.join(raw_name, "notes")
+    os.makedirs(notes_dir, exist_ok=True)
 
     # Path for the .typ file
-    typ_file_path = os.path.join(raw_name, f"_{raw_name}.typ")
+    typ_file_path = os.path.join(notes_dir, f"_{raw_name}.typ")
 
     # Content of the .typ file
     typ_content = f'''// AUTOMATICALLY GENERATED FILE, DO NOT EDIT!
-#import "../global.typ"
+#import "../../global.typ"
 #import global: *
 #let template(doc) = {{
 primary-color.update(rgb("{primary_color}"))

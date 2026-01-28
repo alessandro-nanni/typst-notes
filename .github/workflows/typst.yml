@@ -31,14 +31,25 @@ jobs:
 
       - name: Compile Typst to PDFs
         run: |
-          mkdir -p build
+          mkdir -p build/notes
           for course_dir in ./*; do
             if [ -d "$course_dir" ]; then
               course_name=$(basename "$course_dir")
-              typ_file="$course_dir/$course_name.typ"
+              typ_file="$course_dir/notes/$course_name.typ"
               if [ -f "$typ_file" ]; then
-                typst compile --root ../ "$typ_file" "build/${course_name}.pdf"
+                typst compile --root ../ "$typ_file" "build/notes/${course_name}.pdf"
               fi
+            fi
+          done
+
+      - name: Generate Index
+        run: |
+          echo "# Course Notes" > build/index.md
+          echo "" >> build/index.md
+          for pdf in build/notes/*.pdf; do
+            if [ -f "$pdf" ]; then
+              name=$(basename "$pdf" .pdf)
+              echo "- [$name](notes/$name.pdf)" >> build/index.md
             fi
           done
 

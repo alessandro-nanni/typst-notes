@@ -5,7 +5,7 @@ with open("courses.yml", "r", encoding="utf-8") as f:
   courses = yaml.safe_load(f)
 
 for raw_name, course_data in courses.items():
-  folder = raw_name
+  folder = os.path.join(raw_name, "notes")
   if not os.path.isdir(folder):
       continue
 
@@ -15,14 +15,13 @@ for raw_name, course_data in courses.items():
   # Find all typ files in folder except the one named after the folder itself
   includes = []
   for file in sorted(os.listdir(folder)):
-      if file.endswith(".typ") and file != f"{raw_name}.typ":
+      if file.endswith(".typ") and file != f"{raw_name}.typ" and not file.startswith("_"):
           includes.append(f'#include "{file}"')
 
   # Build content
-  content = f'''
-  #import "../global.typ": *
-  #show: course-template.with([{full_name}])
-  {'\n'.join(includes)}
+  content = f'''#import "../../global.typ": *
+#show: course-template.with([{full_name}])
+{'\n'.join(includes)}
   '''
 
   # Write the generated file

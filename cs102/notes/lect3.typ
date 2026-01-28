@@ -3,4 +3,4 @@
 
 = C
 #table()[A][B][C][D]
-Test new 
+Test new
