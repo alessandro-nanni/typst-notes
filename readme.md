@@ -28,6 +28,8 @@ You will be able to view the pdf of each one, but they wont be uploaded to GitHu
 ## 4. Commit and push to create the master PDFs
 After committing and pushing, the github action will generate for each course a master doc, combining all the ones in the course's folder.
 For each course, you wil be able to view and download the master pdf at `https://<github username>.github.io/<repository name>/<raw course name>.pdf`.
+Alternatively, you can see an index at `https://<github username>.github.io/<repository name>/index.html`
+
 ## 5. Delete [cs102 folder](https://github.com/alessandro-nanni/typst-notes/tree/main/cs102)
 Once you have a course setup, you don't need the example anymore
 # Credits
