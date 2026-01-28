@@ -44,14 +44,14 @@ jobs:
 
       - name: Generate Index
         run: |
-          echo "# Course Notes" > build/index.md
-          echo "" >> build/index.md
+          echo "<!DOCTYPE html><html><head><title>Course Notes</title><style>body{font-family:sans-serif;padding:20px;}ul{list-style:none;padding:0;}li{margin:10px 0;}a{text-decoration:none;color:#00aa88;font-weight:bold;}a:hover{text-decoration:underline;}</style></head><body><h1>Course Notes</h1><ul>" > build/index.html
           for pdf in build/notes/*.pdf; do
             if [ -f "$pdf" ]; then
               name=$(basename "$pdf" .pdf)
-              echo "- [$name](notes/$name.pdf)" >> build/index.md
+              echo "<li><a href=\"notes/$name.pdf\">$name</a></li>" >> build/index.html
             fi
           done
+          echo "</ul></body></html>" >> build/index.html
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@main
